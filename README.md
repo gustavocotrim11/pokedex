@@ -34,4 +34,4 @@ Pokédex é um app direcionado para treinadores de Pokémons consultarem as info
 
 ## 💻 Acesse o projeto aqui
 
-()
+(https://guspokedex.herokuapp.com/)
