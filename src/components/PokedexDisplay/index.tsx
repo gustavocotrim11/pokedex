@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Card } from '../Card';
 import { Loader } from '../Loader';
+import { ErrorPage } from '../ErrorPage';
 import { getAllPokemon, getPokemon, getAnotherPokemonPage } from '../../services/api';
 import { PokemonData } from '../../interfaces';
 
@@ -19,16 +20,22 @@ export function PokedexDisplay() {
   const [nextUrl, setNextUrl] = useState('');
   const [prevUrl, setPrevUrl] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   
   
 
   useEffect(() => {
     async function fetchData() {
       const data = await getAllPokemon();
-      setNextUrl(data.next);
-      setPrevUrl(data.previous);
-      await loadingPokemon(data.results);
-      setLoading(false);
+      if (data) {
+        setNextUrl(data.next);
+        setPrevUrl(data.previous);
+        await loadingPokemon(data.results);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setError(true);
+      }
     }
 
     fetchData();
@@ -65,6 +72,22 @@ export function PokedexDisplay() {
     setPokemonData(pokemonData);
   }
 
+  const render = () => {
+    if (loading) {
+      return <Loader />
+    } else if (error) {
+      return <ErrorPage />
+    } else {
+      return (
+        <>
+          {pokemonData.map((pokemon, i) => {
+            return <Card key={i} pokemon={pokemon}/>
+          })}
+        </>
+      )
+    }
+  }
+
   return (
     <main className="container-display">
       <header className="title-display">
@@ -72,13 +95,7 @@ export function PokedexDisplay() {
         <h1>Pokédex</h1>
       </header>
       <section className="container-grid">
-        {loading ? <Loader /> :
-        <>
-          {pokemonData.map((pokemon, i) => {
-            return <Card key={i} pokemon={pokemon}/>
-          })}
-        </>
-        }
+        {render()}
       </section>
       <div>
         <button type="button" className="btn" onClick={prevPage}>Back</button>

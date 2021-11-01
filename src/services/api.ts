@@ -1,22 +1,34 @@
-const baseUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=18";
+const baseUrl = "https://pokeapi.co/api/v2/pokemo/?offset=0&limit=18";
 
 export async function getAllPokemon() {
-  const response = await fetch(baseUrl);
-  const data = await response.json();
+  try {
+    const response = await fetch(baseUrl);
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function getPokemon(url: string) {
-  const response = await fetch(url);
-  const data = await response.json();
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function getAnotherPokemonPage(url: string) {
-  const response = await fetch(url);
-  const data = await response.json();
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 }
