@@ -1,4 +1,4 @@
-const baseUrl = "https://pokeapi.co/api/v2/pokemo/?offset=0&limit=18";
+const baseUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=18";
 
 export async function getAllPokemon() {
   try {
